@@ -1,0 +1,34 @@
+{% extends "libs/sabre/xml/Envelope.xml" %}
+{% block content %}
+<OTA_AirLowFareSearchRQ xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Target="Production" Version="1.8.5" ResponseType="GIR" ResponseVersion="1.0.3">
+    <POS>
+        <Source PseudoCityCode="PCC">
+            <RequestorID ID="1" Type="1">
+                <CompanyName Code="TN">TN</CompanyName>
+            </RequestorID>
+        </Source>
+    </POS>
+    <OriginDestinationInformation RPH="1">
+        <DepartureDateTime>{{date_departure}}</DepartureDateTime>
+        <OriginLocation LocationCode="{{origin}}"/>
+        <DestinationLocation LocationCode="{{destination}}"/>
+    </OriginDestinationInformation>
+    {% if date_arrival %}
+    <OriginDestinationInformation RPH="2">
+        <DepartureDateTime>{{date_arrival}}</DepartureDateTime>
+        <OriginLocation LocationCode="{{destination}}"/>
+        <DestinationLocation LocationCode="{{origin}}"/>
+    </OriginDestinationInformation>
+    {% endif %}
+    <TravelerInfoSummary SpecificPTC_Indicator="true">
+        <AirTravelerAvail>
+            <PassengerTypeQuantity Code="ADT" Quantity="1"/>
+        </AirTravelerAvail>
+    </TravelerInfoSummary>
+    <TPA_Extensions>
+        <IntelliSellTransaction>
+            <RequestType Name="50ITINS"/>
+        </IntelliSellTransaction>
+    </TPA_Extensions>
+</OTA_AirLowFareSearchRQ>
+{% endblock %}

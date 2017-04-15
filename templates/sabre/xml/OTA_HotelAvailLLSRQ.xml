@@ -1,0 +1,46 @@
+{% extends "libs/sabre/xml/Envelope.xml" %}
+{% block content %}
+<OTA_HotelAvailRQ xmlns="http://webservices.sabre.com/sabreXML/2011/10"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	Version="2.2.1">
+	<AvailRequestSegment>
+		<Customer>
+			<Corporate>
+				<ID>{{ ipcc }}</ID>
+			</Corporate>
+		</Customer>
+		<GuestCounts Count="2" />
+		<HotelSearchCriteria>
+			<Criterion> 
+<!-- 			hotel_city_code -->
+				{% if True %}
+					<HotelRef HotelCityCode="NYC" />
+				{% endif %}
+
+				{% if hotel_latitude and hotel_longitude %}
+					<HotelRef Latitude="{{ hotel_latitude }}" Longitude="{{ hotel_longitude }}"/>
+				{% endif %}
+
+				{% if hotel_name %}
+					<HotelRef HotelName="{{ hotel_name }}"/>
+				{% endif %}
+<!-- 				<PointOfInterest CountryStateCode="TX" NonUS="false">SIX FLAGS</PointOfInterest> -->
+<!-- 				<PointOfInterest CountryStateCode="FR" NonUS="true">LOUVRE</PointOfInterest> -->
+				{% for ramenity in room_amenities %}
+					<RoomAmenity>A2D</RoomAmenity>
+				{% endfor %}
+				
+				{% for hamenity in hotel_amenities %}
+					<HotelAmenity>MEET</HotelAmenity>
+					<HotelAmenity>POOL</HotelAmenity>
+				{% endfor %}
+				
+				{% if price_max or price_min %}
+					<RateRange CurrencyCode="USD" Max="150.00" Min="50.00"/>
+				{% endif %}
+			</Criterion>
+		</HotelSearchCriteria>
+		<TimeSpan End="04-24" Start="04-22" />
+	</AvailRequestSegment>
+</OTA_HotelAvailRQ>
+{% endblock %}

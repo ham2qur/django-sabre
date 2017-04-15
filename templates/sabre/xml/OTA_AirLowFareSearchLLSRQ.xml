@@ -1,0 +1,35 @@
+{% extends "libs/sabre/xml/Envelope.xml" %}
+{% block content %}
+       <OTA_AirLowFareSearchRQ xmlns="http://webservices.sabre.com/sabreXML/2011/10" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="2.3.0">
+        <OriginDestinationInformation RPH="1">
+            <FlightSegment ConnectionInd="O" DepartureDateTime="{{origin_departure_date_time}}" ResBookDesigCode="Y">
+                <DestinationLocation LocationCode="{{destination}}"/>
+                <OriginLocation LocationCode="{{origin}}"/>
+            </FlightSegment>
+        </OriginDestinationInformation>
+        {% if destination_departure_date_time %}
+        <OriginDestinationInformation RPH="2">
+            <FlightSegment ConnectionInd="O" DepartureDateTime="{{destination_departure_date_time}}" ResBookDesigCode="Y">
+                <DestinationLocation LocationCode="{{destination}}"/>
+                <OriginLocation LocationCode="{{origin}}"/>
+            </FlightSegment>
+        </OriginDestinationInformation>
+        {% endif %}
+        <PriceRequestInformation>
+            <OptionalQualifiers>
+                <PricingQualifiers>
+                {% if adt %}
+                    <PassengerType Code="ADT" Quantity="{{adt}}"/>
+                {% else %}
+                    <PassengerType Code="ADT" Quantity="1"/>
+                {% endif %}
+                {% if cnn %}
+                    <PassengerType Code="CNN" Quantity="{{cnn}}"/>
+                {% endif %}
+                </PricingQualifiers>
+            </OptionalQualifiers>
+        </PriceRequestInformation>
+        </OTA_AirLowFareSearchRQ>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+{% endblock %}

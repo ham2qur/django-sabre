@@ -1,0 +1,39 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <SOAP-ENV:Header>
+        <m:MessageHeader xmlns:m="http://www.ebxml.org/namespaces/messageHeader">
+            <m:From>
+                <m:PartyId type="urn:x12.org:IO5:01">{{From}}</m:PartyId>
+            </m:From>
+            <m:To>
+                <m:PartyId type="urn:x12.org:IO5:01">{{To}}</m:PartyId>
+            </m:To>
+            <m:CPAId>{{CPAId}}</m:CPAId>
+            <m:ConversationId>{{ConversationId}}</m:ConversationId>
+            <m:Service m:type="OTA">{{Service}}</m:Service>
+            <m:Action>{{Action}}</m:Action>
+            <m:MessageData>
+                <m:MessageId>{{MessageId}}</m:MessageId>
+                <m:Timestamp>{{Timestamp}}</m:Timestamp>
+                <m:TimeToLive>{{TimeToLive}}</m:TimeToLive>
+            </m:MessageData>
+            <m:DuplicateElimination/>
+            <m:Description>{{Service}}</m:Description>
+        </m:MessageHeader>
+        <wsse:Security xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/12/secext">
+            <wsse:BinarySecurityToken valueType="String" EncodingType="wsse:Base64Binary">{{BinarySecurityToken}}</wsse:BinarySecurityToken>
+        </wsse:Security>        
+        <wsse:Security xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/12/secext" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/12/utility">
+            <wsse:UsernameToken>
+                <wsse:Username>{{Username}}</wsse:Username>
+                <wsse:Password>{{Password}}</wsse:Password>
+                <Organization>{{Organization}}</Organization>
+                <Domain>{{Domain}}</Domain>
+            </wsse:UsernameToken>
+        </wsse:Security>        
+    </SOAP-ENV:Header>
+    <SOAP-ENV:Body>
+    <OTA_PingRQ TimeStamp="{{TimeStamp}}" Version="1.0.0">
+          <EchoData> Are you there </EchoData>
+        </OTA_PingRQ>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
